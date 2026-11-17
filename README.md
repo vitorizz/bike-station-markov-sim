@@ -33,3 +33,6 @@ Run all scripts from the repo root.
 
 1. `python clean_data.py`: combines the CSVs, removes rides longer than 3 hours or with
    negative duration, prints the cleaning report, and writes `data/trips_clean.parquet`.
+2. `python warmup.py`: answers warm-up questions 1-6. Writes the histogram to
+   `figures/duration_histogram.png` and all numbers to `results/warmup_results.csv`.
+   No randomness is involved.
