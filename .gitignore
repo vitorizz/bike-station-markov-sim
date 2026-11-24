@@ -2,3 +2,6 @@
 *.zip
 data/
 __pycache__/
+
+!outputs/matrices/*.csv
+.DS_Store

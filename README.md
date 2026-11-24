@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.13 with `pandas`, `numpy`, `matplotlib`, `pyarrow`.
+Python 3.13 with `pandas`, `numpy`, `matplotlib`, `pyarrow`, `scipy`.
 
 ```
 pip install pandas numpy matplotlib pyarrow
@@ -33,3 +33,19 @@ Run all scripts from the repo root.
 
 1. `python clean_data.py`: combines the CSVs, removes rides longer than 3 hours or with
    negative duration, prints the cleaning report, and writes `data/trips_clean.parquet`.
+
+## Part I: Markov chains
+
+`part1_markov_chains.ipynb` builds the transition matrices for W 21 St & 6 Ave, Ave A & E 14 St and 7 Ave & Central Park South, for weekday mornings (7-10am) and evenings (4-7pm), with a 5 minute step. Run `clean_data.py` first, then run all cells of the notebook. Nothing in Part I is random, so no seed is needed.
+
+| Notebook section | Report |
+|---|---|
+| 4. Choosing the step | Table 5 |
+| 5. Rule and step | Table 6 |
+| 6. Checks of the assumptions | Table 7 |
+| 7. Summary of the matrices | Table 8, Figure 3, appendix figures |
+| 8. Stationary distributions | Table 9 |
+| 9. What happens within one block | Table 10, Figure 6 |
+| 10. Bikes moved by staff | Day swing at Ave A |
+
+Figures are saved in `figures/` and the 6 full transition matrices in `outputs/matrices/`, where row i and column j give P(i, j).
