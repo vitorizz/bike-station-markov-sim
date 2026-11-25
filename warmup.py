@@ -1,15 +1,18 @@
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
-from matplotlib.ticker import StrMethodFormatter
+from matplotlib.ticker import FuncFormatter
 
-from clean_data import MAX_MINUTES, OUT_PATH
+from clean_data import OUT_PATH
 
 # Question 1 is in main(). Questions 2-6 are in print_warmup_results().
 
-BIN_WIDTH = 5
-FIGURE_PATH = Path(OUT_PATH).with_name("warmup_ride_durations.png")
+PLOT_MAX = 60
+FIGURE_PATH = Path("figures/warmup_ride_durations.png")
+
+plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False})
 
 
 def print_probability(label, numerator, denominator):
@@ -85,25 +88,33 @@ def main():
         raise ValueError("The cleaned data has no valid ride durations to plot.")
 
     # Question 1. Ride duration histogram 
-    bins = range(0, MAX_MINUTES + 1, BIN_WIDTH)
-    fig, ax = plt.subplots(figsize=(9, 5), layout="constrained")
-    counts, _, _ = ax.hist(
-        valid_durations, bins=bins, color="#24608A", edgecolor="white", linewidth=0.6
-    )
-    ax.set(
-        title="NYC Citi Bike ride durations, August 2026",
-        xlabel="Ride duration (minutes)",
-        ylabel="Number of rides per 5-minute bin",
-        xlim=(0, MAX_MINUTES),
-        xticks=range(0, MAX_MINUTES + 1, 20),
-    )
-    ax.yaxis.set_major_formatter(StrMethodFormatter("{x:,.0f}"))
+    # 1 minute bins up to 60 minutes (report Figure 1)
+    bins = np.arange(0, PLOT_MAX + 1, 1)
+    counts, _ = np.histogram(valid_durations[valid_durations <= PLOT_MAX], bins=bins)
+    median, mean = valid_durations.median(), valid_durations.mean()
+
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ax.bar(bins[:-1], counts, width=0.9, align="edge", color="#2a78d6")
+    ax.set_xlim(0, PLOT_MAX)
+    ax.set_xticks(range(0, PLOT_MAX + 1, 5))
+    ax.set_xlabel("Ride duration (minutes)")
+    ax.set_ylabel("Number of rides")
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda y, _: f"{y / 1000:.0f}k" if y else "0"))
+    ax.grid(axis="y", color="#e5e5e5")
     ax.set_axisbelow(True)
-    ax.grid(axis="y", alpha=0.25)
-    fig.savefig(FIGURE_PATH, dpi=200)
+
+    summary = f"Median  {median:.1f} min\nMean  {mean:.1f} min\nRides  {len(valid_trips):,}"
+    ax.text(0.96, 0.92, summary, transform=ax.transAxes, ha="right", va="top", linespacing=1.8)
+
+    FIGURE_PATH.parent.mkdir(exist_ok=True)
+    fig.savefig(FIGURE_PATH, dpi=240)
     plt.close(fig)
 
+    over_60 = (valid_durations > PLOT_MAX).sum()
+    peak = counts.argmax()
     print(f"Rides plotted: {int(counts.sum()):,}")
+    print(f"Rides over {PLOT_MAX} minutes, left out of the plot: {over_60:,} ({over_60 / len(valid_trips):.1%})")
+    print(f"Median {median:.1f} min, peak of the histogram at {bins[peak]}-{bins[peak + 1]} min")
     missing_durations = len(trips) - len(valid_trips)
     print(f"Rides excluded because duration is missing: {missing_durations:,}")
     print(f"Saved {FIGURE_PATH}")
