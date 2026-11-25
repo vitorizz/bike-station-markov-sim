@@ -62,11 +62,7 @@ Run everything from the repo root, in this order.
 | Table 12  | `report_extras.ipynb`, section 4                          | in the notebook                                                           |
 | Table 13  | `report_extras.ipynb`, section 6                          | in the notebook                                                           |
 
-Differences from the PDF:
-
-- Table 5: the p-value for 7 Ave & CPS in the evening is 0.0385, which the notebook shows as 0.038 and the report as 0.039.
-- Figures 1 and 2 show the same data, but the report draws them in matplotlib's default font with slightly different margins and text sizes.
-- The other figures use the Inter font (https://rsms.me/inter, we used version 4.1). Without it matplotlib prints a warning and uses its default font. Letter spacing can change by a few pixels between versions. The files for Figures 6 and 8 are the ones in the report, so running the notebooks again changes them slightly.
+All figures use the Inter font, version 4.1 (https://rsms.me/inter). Without it matplotlib prints a warning and uses its default font.
 
 ## Warm-up and choice of the stations
 
