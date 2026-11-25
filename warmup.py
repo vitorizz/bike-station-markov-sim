@@ -33,7 +33,7 @@ def print_warmup_results(trips):
     over_25 = durations.gt(25)
     under_10 = durations.lt(10)
 
-    # Question 2. Mean, variance, and rides over 20 minutes ---
+    # Question 2. Mean, variance, and rides over 20 minutes
     print("\n2. Overall ride duration")
     print(f"Expected ride duration = {durations.mean():.4f} minutes")
     # Empirical variance is the mean of the squared deviations from the mean.
@@ -41,26 +41,26 @@ def print_warmup_results(trips):
     # Divide by the total number of rides with a valid duration.
     print_probability("P(duration > 20 minutes)", over_20.sum(), len(trips))
 
-    # Question 3. Rides over 20 minutes given membership 
+    # Question 3. Rides over 20 minutes given membership
     # The denominator is all member rides.
     print("\n3. Probability of a ride over 20 minutes given membership")
     print_probability(
         "P(duration > 20 minutes | member)", (over_20 & is_member).sum(), is_member.sum()
     )
 
-    # Question 4. Membership given a ride over 25 minutes 
+    # Question 4. Membership given a ride over 25 minutes
     # The denominator is all rides over 25 minutes.
     print("\n4. Probability of membership given a ride over 25 minutes")
     print_probability(
         "P(member | duration > 25 minutes)", (is_member & over_25).sum(), over_25.sum()
     )
 
-    # Question 5. Average duration by bike type 
+    # Question 5. Average duration by bike type
     print("\n5. Expected ride duration by bike type")
     print(f"Electric bike = {durations[is_electric].mean():.4f} minutes")
     print(f"Classic bike = {durations[is_classic].mean():.4f} minutes")
 
-    # Question 6. Bike type given a ride under 10 minutes 
+    # Question 6. Bike type given a ride under 10 minutes
     # Use all rides under 10 minutes as the denominator for both bike types.
     print("\n6. Bike type given a ride under 10 minutes")
     short_ride_count = under_10.sum()
@@ -88,7 +88,7 @@ def main():
     if valid_durations.empty:
         raise ValueError("The cleaned data has no valid ride durations to plot.")
 
-    # Question 1. Ride duration histogram 
+    # Question 1. Ride duration histogram
     # 1 minute bins up to 60 minutes (report Figure 1)
     bins = np.arange(0, PLOT_MAX + 1, 1)
     counts, _ = np.histogram(valid_durations[valid_durations <= PLOT_MAX], bins=bins)
