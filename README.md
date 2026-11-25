@@ -32,7 +32,7 @@ Run everything from the repo root, in this order.
    negative duration, prints the cleaning report, and writes `data/trips_clean.parquet`.
 2. `python warmup.py`: prints the answers to the warm-up questions and saves the histogram
    of ride durations to `figures/warmup_ride_durations.png`.
-3. `report_extras.ipynb`: run all cells (warm-up extras and choice of the stations).
+3. `exploration.ipynb`: run all cells (warm-up extras and choice of the stations).
 4. `part1_markov_chains.ipynb`: run all cells (Part I).
 5. `part2_simulation.ipynb`: run all cells (Part II).
 
@@ -49,7 +49,7 @@ Run everything from the repo root, in this order.
 | Figure 7  | `part2_simulation.ipynb`, section 2                       | `figures/p2_sample_paths.png`                                             |
 | Figure 8  | `part2_simulation.ipynb`, section 3                       | `figures/p2_recommendation.png`                                           |
 | Table 1   | `clean_data.py`                                           | printed                                                                   |
-| Table 2   | `report_extras.ipynb`, section 5                          | in the notebook                                                           |
+| Table 2   | `exploration.ipynb`, section 5                            | in the notebook                                                           |
 | Table 3   | `part1_markov_chains.ipynb`, section 4                    | in the notebook                                                           |
 | Table 4   | `part1_markov_chains.ipynb`, section 5                    | in the notebook                                                           |
 | Table 5   | `part1_markov_chains.ipynb`, section 6                    | in the notebook                                                           |
@@ -59,14 +59,14 @@ Run everything from the repo root, in this order.
 | Table 9   | `part2_simulation.ipynb`, section 2                       | in the notebook                                                           |
 | Table 10  | `part2_simulation.ipynb`, section 3                       | in the notebook                                                           |
 | Table 11  | `part2_simulation.ipynb`, section 5                       | in the notebook                                                           |
-| Table 12  | `report_extras.ipynb`, section 4                          | in the notebook                                                           |
-| Table 13  | `report_extras.ipynb`, section 6                          | in the notebook                                                           |
+| Table 12  | `exploration.ipynb`, section 4                            | in the notebook                                                           |
+| Table 13  | `exploration.ipynb`, section 6                            | in the notebook                                                           |
 
 All figures use the Inter font, version 4.1 (https://rsms.me/inter). Without it matplotlib prints a warning and uses its default font.
 
 ## Warm-up and choice of the stations
 
-`warmup.py` answers Q1 to Q6 and draws Figure 1. `report_extras.ipynb` computes the other numbers of these sections. It groups rides by station name, which gives the 2,390 stations of the report, while Part I uses station IDs. Nothing in it is random.
+`warmup.py` answers Q1 to Q6 and draws Figure 1. `exploration.ipynb` computes the other numbers of these sections. It groups rides by station name, which gives the 2,390 stations of the report, while Part I uses station IDs. Nothing in it is random.
 
 | Notebook section                  | Report                                                                        |
 | --------------------------------- | ----------------------------------------------------------------------------- |
