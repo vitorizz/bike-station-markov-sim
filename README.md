@@ -2,7 +2,7 @@
 
 ## Requirements
 
-Python 3.12 or newer with `pandas`, `numpy`, `matplotlib`, `pyarrow`, `scipy`.
+Python 3.12 or newer with `pandas`, `numpy`, `matplotlib`, `pyarrow`, `scipy`, and Jupyter for the notebooks.
 
 ```
 pip install pandas numpy matplotlib pyarrow scipy
@@ -31,34 +31,69 @@ Run everything from the repo root, in this order.
 1. `python clean_data.py`: combines the CSVs, removes rides longer than 3 hours or with
    negative duration, prints the cleaning report, and writes `data/trips_clean.parquet`.
 2. `python warmup.py`: prints the answers to the warm-up questions and saves the histogram
-   of ride durations to `data/warmup_ride_durations.png`.
-3. `part1_markov_chains.ipynb`: run all cells (Part I).
-4. `part2_simulation.ipynb`: run all cells (Part II).
+   of ride durations to `figures/warmup_ride_durations.png`.
+3. `report_extras.ipynb`: run all cells (warm-up extras and choice of the stations).
+4. `part1_markov_chains.ipynb`: run all cells (Part I).
+5. `part2_simulation.ipynb`: run all cells (Part II).
+
+## Where each figure and table comes from
+
+| Report    | Code                                                      | File                                                                      |
+| --------- | --------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Figure 1  | `warmup.py`                                               | `figures/warmup_ride_durations.png`                                       |
+| Figure 2  | `part1_markov_chains.ipynb`, section 4                    | `figures/p1_matrix_15s_5min.png`                                          |
+| Figure 3  | `part1_markov_chains.ipynb`, section 7                    | `figures/p1_matrix_rows.png`                                              |
+| Figure 4  | `part1_markov_chains.ipynb`, section 7                    | `figures/p1_matrices.png`                                                 |
+| Figure 5  | `part1_markov_chains.ipynb`, section 7                    | `figures/p1_matrix_edges.png`                                             |
+| Figure 6  | `part1_markov_chains.ipynb`, section 9                    | `figures/p1_stationary.png`                                               |
+| Figure 7  | `part2_simulation.ipynb`, section 2                       | `figures/p2_sample_paths.png`                                             |
+| Figure 8  | `part2_simulation.ipynb`, section 3                       | `figures/p2_recommendation.png`                                           |
+| Table 1   | `clean_data.py`                                           | printed                                                                   |
+| Table 2   | `report_extras.ipynb`, section 5                          | in the notebook                                                           |
+| Table 3   | `part1_markov_chains.ipynb`, section 4                    | in the notebook                                                           |
+| Table 4   | `part1_markov_chains.ipynb`, section 5                    | in the notebook                                                           |
+| Table 5   | `part1_markov_chains.ipynb`, section 6                    | in the notebook                                                           |
+| Table 6   | `part1_markov_chains.ipynb`, section 7                    | in the notebook, full matrices in `outputs/matrices/`                     |
+| Table 7   | `part1_markov_chains.ipynb`, section 8                    | in the notebook                                                           |
+| Table 8   | `part1_markov_chains.ipynb`, section 9                    | in the notebook                                                           |
+| Table 9   | `part2_simulation.ipynb`, section 2                       | in the notebook                                                           |
+| Table 10  | `part2_simulation.ipynb`, section 3                       | in the notebook                                                           |
+| Table 11  | `part2_simulation.ipynb`, section 5                       | in the notebook                                                           |
+| Table 12  | `report_extras.ipynb`, section 4                          | in the notebook                                                           |
+| Table 13  | `report_extras.ipynb`, section 6                          | in the notebook                                                           |
+
+Differences from the PDF:
+
+- Table 5: the p-value for 7 Ave & CPS in the evening is 0.0385, which the notebook shows as 0.038 and the report as 0.039.
+- Figures 1 and 2 show the same data, but the report draws them in matplotlib's default font with slightly different margins and text sizes.
+- The other figures use the Inter font (https://rsms.me/inter, we used version 4.1). Without it matplotlib prints a warning and uses its default font. Letter spacing can change by a few pixels between versions. The files for Figures 6 and 8 are the ones in the report, so running the notebooks again changes them slightly.
+
+## Warm-up and choice of the stations
+
+`warmup.py` answers Q1 to Q6 and draws Figure 1. `report_extras.ipynb` computes the other numbers of these sections. It groups rides by station name, which gives the 2,390 stations of the report, while Part I uses station IDs. Nothing in it is random.
+
+| Notebook section                  | Report                                                                        |
+| --------------------------------- | ----------------------------------------------------------------------------- |
+| 1. Warm-up extras                 | Median, casual rates, Bayes' rule in Q4, splits by user type in Q5, Q6 shares |
+| 2. Rides across the city by hour  | Hourly peaks, member shares in "Stations and time blocks"                     |
+| 3. The two storm days             | Share of normal rides on August 20 and 27                                     |
+| 4. Candidate stations             | Table 12                                                                      |
+| 5. The three stations we model    | Table 2, distance between W 21 St and Ave A                                   |
+| 6. Morning net flow on single days | Table 13                                                                     |
 
 ## Part I: Markov chains
 
-`part1_markov_chains.ipynb` builds the transition matrices for W 21 St & 6 Ave, Ave A & E 14 St and 7 Ave & Central Park South, for weekday mornings (7-10am) and evenings (4-7pm), with a 5 minute step. Run `clean_data.py` first, then run all cells of the notebook. Nothing in Part I is random, so no seed is needed.
+`part1_markov_chains.ipynb` builds the transition matrices for W 21 St & 6 Ave, Ave A & E 14 St and 7 Ave & Central Park South, for weekday mornings (7-10am) and evenings (4-7pm), with a 5 minute step. Run `clean_data.py` first, then run all cells of the notebook. Nothing in Part I is random, so no seed is needed. The docks are checked against the station feed saved in `station_feed/`.
 
 | Notebook section                 | Report                    |
 | -------------------------------- | ------------------------- |
-| 4. Choosing the step             | Table 3                   |
+| 4. Choosing the step             | Table 3, Figure 2         |
 | 5. Rule and step                 | Table 4                   |
 | 6. Checks of the assumptions     | Table 5                   |
 | 7. Summary of the matrices       | Table 6, Figures 3, 4, 5  |
 | 8. Stationary distributions      | Table 7                   |
 | 9. What happens within one block | Table 8, Figure 6         |
 | 10. Bikes moved by staff         | Day swing at Ave A        |
-
-| File in `figures/`      | Report figure                                           |
-| ----------------------- | ------------------------------------------------------- |
-| `p1_matrix_rows.png`    | Figure 3 (evening title reads 16-7pm instead of 4-7pm)  |
-| `p1_matrices.png`       | Figure 4 (same matrices, 3x2 panels instead of 2x3)     |
-| `p1_matrix_edges.png`   | Figure 5 (same states, 3x2 panels instead of 2x3)       |
-| `p1_stationary.png`     | Figure 6                                                |
-| `p2_sample_paths.png`   | Figure 7 (3x2 panels instead of 2x3)                    |
-| `p2_recommendation.png` | Figure 8                                                |
-
-Figure 2 (W 21 St morning, states 54 to 74, 15 second and 5 minute steps) has no code or file in this repo yet.
 
 Figures are saved in `figures/` and the 6 full transition matrices in `outputs/matrices/`, where row i and column j give P(i, j).
 
