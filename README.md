@@ -49,6 +49,17 @@ Run everything from the repo root, in this order.
 | 9. What happens within one block | Table 8, Figure 6         |
 | 10. Bikes moved by staff         | Day swing at Ave A        |
 
+| File in `figures/`      | Report figure                                           |
+| ----------------------- | ------------------------------------------------------- |
+| `p1_matrix_rows.png`    | Figure 3 (evening title reads 16-7pm instead of 4-7pm)  |
+| `p1_matrices.png`       | Figure 4 (same matrices, 3x2 panels instead of 2x3)     |
+| `p1_matrix_edges.png`   | Figure 5 (same states, 3x2 panels instead of 2x3)       |
+| `p1_stationary.png`     | Figure 6                                                |
+| `p2_sample_paths.png`   | Figure 7 (3x2 panels instead of 2x3)                    |
+| `p2_recommendation.png` | Figure 8                                                |
+
+Figure 2 (W 21 St morning, states 54 to 74, 15 second and 5 minute steps) has no code or file in this repo yet.
+
 Figures are saved in `figures/` and the 6 full transition matrices in `outputs/matrices/`, where row i and column j give P(i, j).
 
 ## Part II: Simulation
