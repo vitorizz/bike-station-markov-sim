@@ -13,6 +13,7 @@ PLOT_MAX = 60
 FIGURE_PATH = Path("figures/warmup_ride_durations.png")
 
 plt.rcParams.update({"font.size": 10, "axes.spines.top": False, "axes.spines.right": False})
+plt.rcParams["font.family"] = "Inter"
 
 
 def print_probability(label, numerator, denominator):
